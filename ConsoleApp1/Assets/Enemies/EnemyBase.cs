@@ -20,7 +20,10 @@ namespace ConsoleApp1.Assets.Enemies
         {
             Random r = new Random();
             int level = r.Next(player.Level - 1, player.Level + 1);
-
+            if (level == 0)
+            {
+                level = 1;
+            }
             Name = type.ToString();
             Type = type;
             MaxHP = r.Next(player.MaxHP / 2, player.MaxHP);

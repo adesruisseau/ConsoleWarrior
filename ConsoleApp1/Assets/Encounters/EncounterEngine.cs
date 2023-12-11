@@ -35,7 +35,7 @@ namespace ConsoleApp1.Assets.Encounters
                 Typewriter.Write("You are still chained to the wall.");
                 Encounter1();
             }
-        }
+        } 
 
         public static void Encounter2(Player.Player player)
         {
@@ -74,72 +74,18 @@ namespace ConsoleApp1.Assets.Encounters
             Random r = new Random();
             int specialItemFoundProc = r.Next(0, 10);
 
-            if (specialItemFoundProc > 4)
+            if (specialItemFoundProc < 3)
             {
-                Console.Clear();
-                Console.WriteLine(AsciiArt.GetHook1Art());
-                if (player.PlayerProgression.CurrentHook == 1)
-                {
-                    Typewriter.Write($"You found a note!");
-                    Typewriter.Write($"The note says: ");
-                    Typewriter.Write($"{player.Name}, I'm praying to the Gods you find this letter.");
-                    Typewriter.Write($"If you don't remember, we both were brought here after being");
-                    Typewriter.Write($"captured by Zalil, the high priest.");
-                    Typewriter.Write($" ");
-                    Typewriter.Write($"I tried to wake you up, but it seems your body was slower to");
-                    Typewriter.Write($"respond to the trauma than my own. There's more to this maze");
-                    Typewriter.Write($"than you might realize; but you need to keep an eye out f--");
-                    Typewriter.Write($"......", 200);
-                    Typewriter.Write($"The rest of the note is missing, you'll have to find the other part.");
-                    Typewriter.Write($"of the message to figure out what the stranger is trying to tell you.");
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey();
-
-                    Console.Clear();
-                    Console.WriteLine(AsciiArt.GetHook1ArtifactArt());
-                    Typewriter.Write($"Inside of the note is a small idol; ");
-                    Typewriter.Write($"carved stone with an unreadable inscription");
-                    Typewriter.Write($"You hold it in your palm, and feel a surge of energy flow through");
-                    Typewriter.Write($"your body. ");
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey();
-
-
-                    Console.Clear();
-                    Console.WriteLine(AsciiArt.AngelArt());
-
-                    Typewriter.Write($"A holy apparition appears before you and speaks.");
-                    Console.WriteLine("-----------------------------------------------------------------------");
-                    Typewriter.Write($"{player.Name}, it seems you have found possession of my idol.");
-                    Typewriter.Write($"it seems fate has allowed my powers to be of your service for the time.");
-                    Typewriter.Write($"Breathe deep, and focus on this icon, and allow my power to flow through");
-                    Typewriter.Write($"you to help guide you along your journey out of this unholy labyrinth.");
-
-
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey();
-
-                    Console.Clear();
-
-                    Console.WriteLine(AsciiArt.UpgradePlayerAbilitiesArt(player));
-                    Typewriter.Write("You can select an ability to permanently upgrade.");
-                    Typewriter.Write("[S]trength, [E]ndurance, [W]isdom, [L]uck");
-                    Typewriter.Write("[1] - Rejuvination");
-                    Typewriter.Write("[2] - Fast Strike");
-                    Typewriter.Write("[3] - Powerful Strike");
-                    Typewriter.Write("[4] - Lifesteal");
-
-                    var upgradeInput = Console.ReadLine().ToString().ToLower();
-
-                    player.SetUpgrade(upgradeInput);
-                    
-
-                    player.PlayerProgression.CurrentHook++;
-                    player.PlayerProgression.HasCompletedFirstMilestone= true;
-                }
+                SpecialEncounter1(player);
 
             }
+            if (specialItemFoundProc >= 3 && specialItemFoundProc <= 8)
+            {
+                SpecialEncounter2(player);
+            }
         }
+
+        
 
         public static void GenerateItem(Player.Player player)
         {
@@ -154,6 +100,7 @@ namespace ConsoleApp1.Assets.Encounters
                     {
                         if (randomWeaponProc == 6 && player.PlayerUpgradePaths.CurrentLuckValue < 1)
                         {
+                            Typewriter.Write("You see nothing of interest.");
                             break;
                         }
                         var weapon = new Weapon(player, true);
@@ -174,6 +121,7 @@ namespace ConsoleApp1.Assets.Encounters
                     {
                         if (randomWeaponProc == 7 && player.PlayerUpgradePaths.CurrentLuckValue < 1)
                         {
+                            Typewriter.Write("You see nothing of interest.");
                             break;
                         }
                         Typewriter.Write($"You found a healing potion! Your health has been replenished.");
@@ -188,6 +136,7 @@ namespace ConsoleApp1.Assets.Encounters
                     {
                         if (randomWeaponProc == 8 && player.PlayerUpgradePaths.CurrentLuckValue < 1)
                         {
+                            Typewriter.Write("You see nothing of interest.");
                             break;
                         }
                         Typewriter.Write($"You found a mana potion! Your mana has been replenished.");
@@ -289,19 +238,19 @@ namespace ConsoleApp1.Assets.Encounters
             if (player.CurrentMana > 0)
             {
                 Typewriter.Write("[A]ttack or [H]eal?");
-                if (player.PlayerUpgradePaths.RejuvinationSpell)
+                if (player.PlayerUpgradePaths.RejuvinationSpell && !hasCastRejuvination)
                 {
                     Typewriter.Write("Cast [R]ejuvination");
                 }
-                if (player.PlayerUpgradePaths.FastStrikeSpell)
+                if (player.PlayerUpgradePaths.FastStrikeSpell && !hasCastFastStrike)
                 {
                     Typewriter.Write("Cast [F]ast Strike");
                 }
-                if (player.PlayerUpgradePaths.PowerfulStrikeSpell)
+                if (player.PlayerUpgradePaths.PowerfulStrikeSpell && !hasCastPowerfulStrike)
                 {
                     Typewriter.Write("Cast [P]owerful Strike");
                 }
-                if (player.PlayerUpgradePaths.LifestealSpell)
+                if (player.PlayerUpgradePaths.LifestealSpell && !hasCastLifesteal)
                 {
                     Typewriter.Write("Cast [L]ifesteal");
                 }
@@ -394,5 +343,96 @@ namespace ConsoleApp1.Assets.Encounters
             }
         }
 
+
+        private static void SpecialEncounter1(Player.Player player)
+        {
+            Console.Clear();
+            Console.WriteLine(AsciiArt.GetHook1Art());
+            if (player.PlayerProgression.CurrentHook == 1)
+            {
+                Typewriter.Write($"You found a note!");
+                Typewriter.Write($"The note says: ");
+                Typewriter.Write($"{player.Name}, I'm praying to the Gods you find this letter.");
+                Typewriter.Write($"If you don't remember, we both were brought here after being");
+                Typewriter.Write($"captured by Zalil, the high priest.");
+                Typewriter.Write($" ");
+                Typewriter.Write($"I tried to wake you up, but it seems your body was slower to");
+                Typewriter.Write($"respond to the trauma than my own. There's more to this maze");
+                Typewriter.Write($"than you might realize; but you need to keep an eye out f--");
+                Typewriter.Write($"......", 200);
+                Typewriter.Write($"The rest of the note is missing, you'll have to find the other part.");
+                Typewriter.Write($"of the message to figure out what the stranger is trying to tell you.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+
+                Console.Clear();
+                Console.WriteLine(AsciiArt.GetHook1ArtifactArt());
+                Typewriter.Write($"Inside of the note is a small idol; ");
+                Typewriter.Write($"carved stone with an unreadable inscription");
+                Typewriter.Write($"You hold it in your palm, and feel a surge of energy flow through");
+                Typewriter.Write($"your body. ");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+
+
+                Console.Clear();
+                Console.WriteLine(AsciiArt.AngelArt());
+
+                Typewriter.Write($"A holy apparition appears before you and speaks.");
+                Console.WriteLine("-----------------------------------------------------------------------");
+                Typewriter.Write($"{player.Name}, it seems you have found possession of my idol.");
+                Typewriter.Write($"it seems fate has allowed my powers to be of your service for the time.");
+                Typewriter.Write($"Breathe deep, and focus on this icon, and allow my power to flow through");
+                Typewriter.Write($"you to help guide you along your journey out of this unholy labyrinth.");
+
+
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+
+                Console.Clear();
+
+                Console.WriteLine(AsciiArt.UpgradePlayerAbilitiesArt(player));
+                Typewriter.Write("You can select an ability to permanently upgrade.");
+                Typewriter.Write("[S]trength, [E]ndurance, [W]isdom, [L]uck");
+                Typewriter.Write("[1] - Rejuvination");
+                Typewriter.Write("[2] - Fast Strike");
+                Typewriter.Write("[3] - Powerful Strike");
+                Typewriter.Write("[4] - Lifesteal");
+
+                var upgradeInput = Console.ReadLine().ToString().ToLower();
+
+                player.SetUpgrade(upgradeInput);
+
+
+                player.PlayerProgression.CurrentHook++;
+                player.PlayerProgression.HasCompletedFirstMilestone = true;
+            }
+        }
+
+        private static void SpecialEncounter2(Player.Player player)
+        {
+            if (player.PlayerProgression.CurrentHook == 2)
+            {
+                Console.Clear();
+                Console.WriteLine(AsciiArt.GetHook1Art());
+
+                Typewriter.Write("You found another note!");
+                Typewriter.Write("You hold the bottom of the note to the first part.");
+                Typewriter.Write(" ");
+                Typewriter.Write("you need to keep an eye out for Zalil's runes. I hope you have found the one I left you already.");
+                Typewriter.Write("The runes will grant you the strength you'll need to defeat Zalil, if you manage to find him.");
+                Typewriter.Write("The beasts in here get stronger and stronger. Manage your resources wisely, or you might not");
+                Typewriter.Write("make it out at all. ");
+                Typewriter.Write(" ");
+                Typewriter.Write("......", 200);
+                Typewriter.Write("That's the end of the note. You still have no idea who it's from though.");
+
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+
+                player.PlayerProgression.CurrentHook++;
+                player.PlayerProgression.HasCompletedSecondMilestone = true;
+            }
+        }
     }
 }

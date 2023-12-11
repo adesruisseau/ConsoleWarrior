@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ConsoleApp1
 {
@@ -30,6 +31,7 @@ namespace ConsoleApp1
                 if (skipIntroInput.Equals("y"))
                 {
                     skipRestart = true;
+                    player = CreatePlayer(player.Name);
                 }
             }
 
@@ -52,48 +54,7 @@ namespace ConsoleApp1
 
                 Console.WriteLine("Please enter your name: ");
                 var name = Console.ReadLine();
-                player = new Player()
-                {
-                    Name = name,
-                    Level = 1,
-                    MaxHP = 9,
-                    CurrentHP = 9,
-                    CurrentMana = 1,
-                    MaxMana = 1,
-                    Weapon = new Weapon(WeaponType.Unarmed),
-                    ExperienceRequired = 1,
-                    ExperienceGained = 0
-                };
-                if (name.Equals("skip"))
-                {
-                    var starterWeapon = new Weapon()
-                    {
-                        Name = "Rusty Sword",
-                        Type = WeaponType.Sword,
-                        MinDamage = 1,
-                        MaxDamage = 4,
-                    };
-                    player.Weapon = starterWeapon;
-                    RoomEngine.GenerateNextArea(player);   
-                }
-                if (name.Equals("cheater"))
-                {
-                    var starterWeapon = new Weapon()
-                    {
-                        Name = "Rusty Sword",
-                        Type = WeaponType.Sword,
-                        MinDamage = 1,
-                        MaxDamage = 4,
-                    };
-                    player.Weapon = starterWeapon;
-                    player.PlayerUpgradePaths.RejuvinationSpell = true;
-                    player.PlayerUpgradePaths.FastStrikeSpell = true;
-                    player.PlayerUpgradePaths.PowerfulStrikeSpell = true;
-                    player.PlayerUpgradePaths.LifestealSpell = true;
-                    RoomEngine.GenerateNextArea(player);
-                }
-                    
-
+                player = CreatePlayer(name);
 
                 Console.Clear();
                 Console.WriteLine(AsciiArt.Door(player));
@@ -121,6 +82,52 @@ namespace ConsoleApp1
                 RunGame(true, player);
             }
             
+        }
+
+        private static Player CreatePlayer(string name)
+        {
+            Player player = new Player()
+            {
+                Name = name,
+                Level = 1,
+                MaxHP = 9,
+                CurrentHP = 9,
+                CurrentMana = 1,
+                MaxMana = 1,
+                Weapon = new Weapon(WeaponType.Unarmed),
+                ExperienceRequired = 1,
+                ExperienceGained = 0
+            };
+            if (name.Equals("skip"))
+            {
+                var starterWeapon = new Weapon()
+                {
+                    Name = "Rusty Sword",
+                    Type = WeaponType.Sword,
+                    MinDamage = 1,
+                    MaxDamage = 4,
+                };
+                player.Weapon = starterWeapon;
+                RoomEngine.GenerateNextArea(player);
+            }
+            if (name.Equals("cheater"))
+            {
+                var starterWeapon = new Weapon()
+                {
+                    Name = "Rusty Sword",
+                    Type = WeaponType.Sword,
+                    MinDamage = 1,
+                    MaxDamage = 4,
+                };
+                player.Weapon = starterWeapon;
+                player.PlayerUpgradePaths.RejuvinationSpell = true;
+                player.PlayerUpgradePaths.FastStrikeSpell = true;
+                player.PlayerUpgradePaths.PowerfulStrikeSpell = true;
+                player.PlayerUpgradePaths.LifestealSpell = true;
+                RoomEngine.GenerateNextArea(player);
+            }
+
+            return player;
         }
     }
 }

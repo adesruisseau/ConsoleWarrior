@@ -8,7 +8,7 @@ namespace ConsoleApp1.Assets.Models
 {
     public static class Typewriter
     {
-        public static void Write(string message, int delay = 0)
+        public static void Write(string message, int delay = 10)
         {
             for (int i = 0; i < message.Length; i++)
             {

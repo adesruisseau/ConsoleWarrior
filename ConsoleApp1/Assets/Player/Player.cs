@@ -128,12 +128,16 @@ namespace ConsoleApp1.Assets.Player
         public int CurrentHook { get; set; } = 1;
 
         public int ReceiveFirstHookAtLevel { get; set; } = 3;
-        public int ReceiveSecondHookAtLevel { get; set; } = 6;
-        public int ReceiveThirdHookAtLevel { get; set; } = 10;
+        public int ReceiveSecondHookAtLevel { get; set; } = 5;
+        public int ReceiveThirdHookAtLevel { get; set; } = 6;
+        public int ReceiveFourthHookAtLevel { get; set; } = 5;
+        public int ReceiveFifthHookAtLevel { get; set; } = 6;
 
         public bool HasCompletedFirstMilestone { get; set; } = false;
         public bool HasCompletedSecondMilestone { get; set; } = false;
         public bool HasCompletedThirdMilestone { get; set; } = false;
+        public bool HasCompletedFourthMilestone { get; set; } = false;
+        public bool HasCompletedFifthMilestone { get; set; } = false;
     }
 
     public class PlayerUpgradePaths
