@@ -17,5 +17,13 @@ namespace ConsoleApp1.Assets.Models
             }
             Console.WriteLine("");
         }
+
+        public static string Read()
+        {
+            var input = Console.ReadLine();
+            input = input.ToString().Trim().ToLower();
+
+            return input;
+        }
     }
 }

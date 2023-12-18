@@ -60,6 +60,19 @@ namespace ConsoleApp1.Assets.Models
             MaxDamage = Math.Max(1, (int)((damageMultiplier + 0.3) * player.Level));
         }
 
+        public Weapon(int level)
+        {
+            Random r = new Random();
+            int weaponTypeSelector = r.Next(0, 3);
+            Type = (WeaponType)weaponTypeSelector;
+            Name = WeaponNamePrefixes[r.Next(0, WeaponNamePrefixes.Count)] + " " + Type.ToString();
+
+            // Adjust these multipliers as needed for balance
+            double damageMultiplier = 0.4 + (level * 0.08);
+            MinDamage = Math.Max(1, (int)(damageMultiplier * level));
+            MaxDamage = Math.Max(1, (int)((damageMultiplier + 0.3) * level));
+        }
+
         private List<string> WeaponNamePrefixes = new List<string>()
         {
             "Rusty", "Shiny", "Dull", "Great", "Heavy", "Bloody"

@@ -246,7 +246,7 @@ namespace ConsoleApp1.Assets.Models
         }
 
 
-        public static StringBuilder GoblinArt(Player.Player player, EnemyBase enemy)
+        public static StringBuilder GoblinArt(Player.Player player, Enemy enemy)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("             ,      ,            ");
@@ -265,7 +265,7 @@ namespace ConsoleApp1.Assets.Models
             return sb;
         }
 
-        public static StringBuilder SkeletonArt(Player.Player player, EnemyBase enemy)
+        public static StringBuilder SkeletonArt(Player.Player player, Enemy enemy)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("                              _.--\"\"-._");
@@ -294,7 +294,7 @@ namespace ConsoleApp1.Assets.Models
             return sb;
         }
 
-        public static StringBuilder VampireArt(Player.Player player, EnemyBase enemy)
+        public static StringBuilder VampireArt(Player.Player player, Enemy enemy)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("              __.......__");
@@ -320,7 +320,7 @@ namespace ConsoleApp1.Assets.Models
         }
 
 
-        public static StringBuilder MinotaurArt(Player.Player player, EnemyBase enemy)
+        public static StringBuilder MinotaurArt(Player.Player player, Enemy enemy)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("        .      .             ");
@@ -349,7 +349,7 @@ namespace ConsoleApp1.Assets.Models
             return sb;
         }
 
-        public static StringBuilder GhostArt(Player.Player player, EnemyBase enemy)
+        public static StringBuilder GhostArt(Player.Player player, Enemy enemy)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("            .--,   ");
@@ -373,7 +373,7 @@ namespace ConsoleApp1.Assets.Models
             return sb;
         }
 
-        public static StringBuilder SpiderArt(Player.Player player, EnemyBase enemy)
+        public static StringBuilder SpiderArt(Player.Player player, Enemy enemy)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("              ( ");
@@ -397,12 +397,12 @@ namespace ConsoleApp1.Assets.Models
 
 
 
-        public static StringBuilder GetEnemyAscii(EnemyType enemyType, Player.Player player, EnemyBase enemy)
+        public static StringBuilder GetEnemyAscii(EnemyType enemyType, Player.Player player, Enemy enemy)
         {
             return GetEnemyAscii((int)enemyType, player, enemy);
         }
 
-        public static StringBuilder GetEnemyAscii(int enemyType, Player.Player player, EnemyBase enemy)
+        public static StringBuilder GetEnemyAscii(int enemyType, Player.Player player, Enemy enemy)
         {
             switch (enemyType)
             {
@@ -431,7 +431,7 @@ namespace ConsoleApp1.Assets.Models
             sb.AppendLine("---------------------------------------------------------------");
         }
 
-        public static void GetEnemyInfoFooter(EnemyBase enemy, StringBuilder sb)
+        public static void GetEnemyInfoFooter(Enemy enemy, StringBuilder sb)
         {
             sb.AppendLine($"Enemy: {enemy.Name}   Level: {enemy.Level}   HP: {enemy.CurrentHP}/{enemy.MaxHP}");
             sb.AppendLine($"Weapon: {enemy.Weapon.Name}   Damage: {enemy.Weapon.MinDamage} - {enemy.Weapon.MaxDamage}");
@@ -491,23 +491,138 @@ namespace ConsoleApp1.Assets.Models
             return sb;
         }
 
+        public static StringBuilder DeadBodyArt()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("         ,(())),   ");
+            sb.AppendLine("        '((\"\"\"))'   ");
+            sb.AppendLine("        '(|X_X|)'   ");
+            sb.AppendLine("          : = :   ");
+            sb.AppendLine("          _) (_   ");
+            sb.AppendLine("       /`~`\"Y\"`~`\\   ");
+            sb.AppendLine("      / /(_ * _)\\ \\   ");
+            sb.AppendLine("     / /  )   (  \\ \\   ");
+            sb.AppendLine("     \\ \\_/\\_//\\_/ /    ");
+            sb.AppendLine("      \\/_) '*' (_\\/   ");
+            return sb;
+        }
+
+        public static StringBuilder FinalRoom()
+        {
+            StringBuilder sb= new StringBuilder();
+            sb.AppendLine("|\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/\\__/   ");
+            sb.AppendLine("|. . . . . . . . . . .[___|___|___|___|___|__]. . . . . . . . . . . . . . . .|  ");
+            sb.AppendLine("| . . . . . . . . . . [_|___|___|___|___|___|] . . . . . . . . . . . . . . . |  ");
+            sb.AppendLine("|. . . . . . . . . . .[___|___|___|___|___|__]. . . . . . . . . . . . . . . .|  ");
+            sb.AppendLine("| . . . .  _  . . . . [_|___|___|___|___|___|] . .  _  . . . . . . .  _  . . |  ");
+            sb.AppendLine("|. . . .  /_\\  . . . .[__|___|___|___|___|___]. .  /_\\  . . . . . .  /_\\  . .|  ");
+            sb.AppendLine("| . . . . =|= . . . . [_|___/          \\___|_] . . =|= . . . . . . . =|= . . |  ");
+            sb.AppendLine("|. . . . . . . . . . .[|___| ~        ~ |___|]. . . . . . . . . . . . . . . .|  ");
+            sb.AppendLine("|=====================[__|__\\__________/_|___]================____===========|  ");
+            sb.AppendLine("|                     [___|___|___|___|___|__]               | |  \\          |  ");
+            sb.AppendLine("|           ,         [_|___|___|___|___|___|]               | |   \\_______  |  ");
+            sb.AppendLine("|          ,I,    ,;,/________________________\\,;,          _|_|___________) |  ");
+            sb.AppendLine("|/|   ____;(;);__;(;);                        ;(;); /|     /   | ,.________) |  ");
+            sb.AppendLine("|||__ !!!!!;;;!!!!=;============================;=  ||__  /____|/ .________| |  ");
+            sb.AppendLine("||/_/|!!!!!!;!!!!!![_|_|_]================[_|_|_]___|/_/|_|______/_______)(__lc  ");
+            sb.AppendLine("/|' |'  |'     '|  [__|__]       `(       [__|__]   |' |'[|)(            ()   \\  ");
+            sb.AppendLine(" '  '   '       '  [_|_|_] o     ) (    o [_|_|_]   '  '   ()                     ");
+            sb.AppendLine("                   [__|__] |    ( ) )   | [__|__]                      ,  ");
+            sb.AppendLine("                   [_|_|_] |---@@@@@@---| [_|_|_]           /|        ,I,       |\\     ");
+            sb.AppendLine("                   [__|__]/!\\ @@@@@@@@ /!\\[__|__]           ||   ____;(;);____  ||  ");
+            sb.AppendLine("                  /______________________________\\          ||__ !!!!!;;;!!!!!__||  ");
+            sb.AppendLine("   ,             |________________________________|         |/_/|!!!!!!;!!!!!!\\_\\|  ");
+            sb.AppendLine("  ,I,       |\\   `================================`         || ||  ||     || || ||  ");
+            sb.AppendLine("_;(;);____  ||  `==================================`        |  |   |       |  |  |  ");
+            return sb;
+        }
+
+        public static StringBuilder Zalil() 
+        { 
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("                    ,-----.    ");
+            sb.AppendLine("                   #,-. ,-.#    ");
+            sb.AppendLine("                  () a   e ()    ");
+            sb.AppendLine("                  (   (_)   )    ");
+            sb.AppendLine("                  #\\_  -  _/#    ");
+            sb.AppendLine("                ,'   `\"\"\"`    `.    ");
+            sb.AppendLine("              ,'      \\X/      `.    ");
+            sb.AppendLine("             /         X     ____\\    ");
+            sb.AppendLine("            /          v   ,`  v  `,    ");
+            sb.AppendLine("           /    /         ( <==+==> )    ");
+            sb.AppendLine("           `-._/|__________\\   ^   /    ");
+            sb.AppendLine("          (\\)  |______@____\\  ^  /    ");
+            sb.AppendLine("            \\  |     ( )    \\ ^ /    ");
+            sb.AppendLine("             )  |             \\^/    ");
+            sb.AppendLine("            (   |             |v    ");
+            sb.AppendLine("           <(^)>|             |    ");
+            sb.AppendLine("             v  |             |    ");
+            sb.AppendLine("                |             |    ");
+            sb.AppendLine("                |_.--.__ .--._|    ");
+            sb.AppendLine("                  `==='  `==='    ");
+            return sb;
+        }
+
+        public static StringBuilder ZalilCombat(Player.Player player, Enemy enemy)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("                    ,-----.    ");
+            sb.AppendLine("                   #,-. ,-.#    ");
+            sb.AppendLine("                  () a   e ()    ");
+            sb.AppendLine("                  (   (_)   )    ");
+            sb.AppendLine("                  #\\_  -  _/#    ");
+            sb.AppendLine("                ,'   `\"\"\"`    `.    ");
+            sb.AppendLine("              ,'      \\X/      `.    ");
+            sb.AppendLine("             /         X     ____\\    ");
+            sb.AppendLine("            /          v   ,`  v  `,    ");
+            sb.AppendLine("           /    /         ( <==+==> )    ");
+            sb.AppendLine("           `-._/|__________\\   ^   /    ");
+            sb.AppendLine("          (\\)  |______@____\\  ^  /    ");
+            sb.AppendLine("            \\  |     ( )    \\ ^ /    ");
+            sb.AppendLine("             )  |             \\^/    ");
+            sb.AppendLine("            (   |             |v    ");
+            sb.AppendLine("           <(^)>|             |    ");
+            sb.AppendLine("             v  |             |    ");
+            sb.AppendLine("                |             |    ");
+            sb.AppendLine("                |_.--.__ .--._|    ");
+            sb.AppendLine("                  `==='  `==='    ");
+            GetPlayerInfoFooter(player, sb);
+            GetEnemyInfoFooter(enemy, sb);
+            return sb;
+        }
+
+
         public static StringBuilder UpgradePlayerAbilitiesArt(Player.Player player )
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(" <<<<<< UPGRADE >>>>>>> ");
             sb.AppendLine(" ----CORE STATS ");
-            sb.AppendLine(" Strength - All weapons now do +1 additional damage. ");
-            sb.AppendLine(" Endurance - Your health is permanently increased by 10 % ");
-            sb.AppendLine(" Wisdom - Your mana pool is permanently increased by 2 ");
-            sb.AppendLine(" Luck - Your chance of finding weapons and potions is increased by 10 % ");
-            sb.AppendLine("  ");
-            sb.AppendLine(" ----SPELLS ");
-            sb.AppendLine(" Rejuvination * -Healing spell is 25 % more effective. [1 mana] ");
-            sb.AppendLine(" Fast Strike -You attack twice next round. [1 mana] ");
-            sb.AppendLine(" Powerful Strike* -Deal an additional 1 - 4 Damage[1 mana] ");
-            sb.AppendLine(" Lifesteal * -you lifesteal 50 % of damage done to an enemy, rounded up. [1 mana] ");
-            sb.AppendLine("  ");
-            sb.AppendLine(" *This is active for the entire combat encounter ");
+            sb.AppendLine($" [S]trength - Weapons do +1 additional damage. Rank: {player.PlayerUpgradePaths.CurrentStrengthValue} / {player.PlayerUpgradePaths.MaxStrengthValue}");
+            sb.AppendLine($" [E]ndurance - Increase HP by 10%. Rank: {player.PlayerUpgradePaths.CurrentEnduranceValue} / {player.PlayerUpgradePaths.MaxEnduranceValue} ");
+            sb.AppendLine($" [W]isdom - Increase Mana Pool by 2. Rank: {player.PlayerUpgradePaths.CurrentWisdomValue} / {player.PlayerUpgradePaths.MaxWisdomValue}");
+            sb.AppendLine($" [L]uck - Finding Potions & Weapons increased by 10%. Rank: {player.PlayerUpgradePaths.CurrentLuckValue} / {player.PlayerUpgradePaths.MaxLuckValue}");
+            sb.AppendLine($"  ");
+            sb.AppendLine($" ----SPELLS ");
+            if (!player.PlayerUpgradePaths.RejuvinationSpell)
+            {
+                sb.AppendLine($"[1] Rejuvination * -Healing spell is 25 % more effective. [1 mana]");
+            }
+            if (!player.PlayerUpgradePaths.FastStrikeSpell)
+            {
+                sb.AppendLine($"[2] Fast Strike -You attack twice next round. [1 mana] ");
+            }
+            if (!player.PlayerUpgradePaths.PowerfulStrikeSpell)
+            {
+                sb.AppendLine($"[3] Powerful Strike* -Deal an additional 1 - 4 Damage [1 mana]");
+            }
+            if (!player.PlayerUpgradePaths.LifestealSpell)
+            {
+                sb.AppendLine($"[4] Lifesteal * -you lifesteal 50 % of damage done to an enemy, rounded up. [1 mana] ");
+            }
+            sb.AppendLine($"  ");
+            sb.AppendLine($" *This is active for the entire combat encounter ");
+            sb.AppendLine("-------------------------------------------------------------------------------------");
+            sb.AppendLine("You can select an ability to permanently upgrade.");
             return sb;
 
         }

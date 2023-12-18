@@ -1,4 +1,5 @@
 ﻿using ConsoleApp1.Assets.Models;
+using ConsoleApp1.Assets.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ConsoleApp1.Assets.Player
     public class Player
     {
         public string Name { get; set; } = "";
-        public int CurrentHP { get; set; }
+        public int CurrentHP { get; set; } = 9;
         public int MaxHP { get; set; } = 9;
         public int CurrentMana { get; set; }
         public int MaxMana { get; set; }
@@ -41,13 +42,21 @@ namespace ConsoleApp1.Assets.Player
             {
                 return true;
             }
+            if (Level >= PlayerProgression.ReceiveFourthHookAtLevel && !PlayerProgression.HasCompletedFourthMilestone)
+            {
+                return true;
+            }
+            if (Level >= PlayerProgression.ReceiveFifthHookAtLevel && !PlayerProgression.HasCompletedFifthMilestone)
+            {
+                return true;
+            }
             return false;
         }
 
         public int Heal(bool rejuvinationActive = false)
         {
             Random r = new Random();
-            int healedAmount = r.Next(1 + Level, (Level * 2) + (MaxHP / 2));
+            int healedAmount = r.Next(1 + Level, (Level * 2) + (int)Math.Ceiling((double)(MaxHP / 2)));
             if (rejuvinationActive)
             {
                 healedAmount = healedAmount + (int)(healedAmount * .5);
@@ -70,7 +79,7 @@ namespace ConsoleApp1.Assets.Player
             MaxHP += (Level * 2) + PlayerUpgradePaths.CurrentEnduranceValue;
             CurrentHP = MaxHP;
 
-            MaxMana = (MaxMana + (Level / 2)) + PlayerUpgradePaths.CurrentWisdomValue;
+            MaxMana = (MaxMana + (int)Math.Ceiling((double)(Level / 2))) + PlayerUpgradePaths.CurrentWisdomValue;
             CurrentMana = MaxMana;
 
             ExperienceRequired = Level;
@@ -78,50 +87,110 @@ namespace ConsoleApp1.Assets.Player
             return Level;
         }
 
-        public void SetUpgrade(string input)
+        public bool SetUpgrade(string input)
         {
-            if (input.Equals("s"))
+            var response = true;
+            if (input.Equals("s") && PlayerUpgradePaths.CurrentStrengthValue < PlayerUpgradePaths.MaxStrengthValue)
             {
                 PlayerUpgradePaths.CurrentStrengthValue++;
                 Typewriter.Write("You upgraded your strength!");
             }
-            if (input.Equals("e"))
+            else if (input.Equals("e") && PlayerUpgradePaths.CurrentEnduranceValue < PlayerUpgradePaths.MaxEnduranceValue)
             {
                 PlayerUpgradePaths.CurrentEnduranceValue++;
                 Typewriter.Write("You upgraded your endurance!");
+                CurrentHP += (int)Math.Ceiling((MaxHP * .1));
+                MaxHP += (int)Math.Ceiling((MaxHP * .1));
             }
-            if (input.Equals("w"))
+            else if (input.Equals("w") && PlayerUpgradePaths.CurrentWisdomValue < PlayerUpgradePaths.MaxWisdomValue)
             {
                 PlayerUpgradePaths.CurrentWisdomValue++;
                 Typewriter.Write("You upgraded your wisdom!");
+                CurrentMana += 2;
+                MaxMana += 2;
             }
-            if (input.Equals("l"))
+            else if (input.Equals("l") && PlayerUpgradePaths.CurrentLuckValue < PlayerUpgradePaths.MaxLuckValue)
             {
                 PlayerUpgradePaths.CurrentLuckValue++;
                 Typewriter.Write("You upgraded your luck!");
             }
-            if (input.Equals("1"))
+            else if (input.Equals("1") && !PlayerUpgradePaths.RejuvinationSpell)
             {
                 PlayerUpgradePaths.RejuvinationSpell = true;
                 Typewriter.Write("You can now cast [Rejuvination]");
             }
-            if (input.Equals("2"))
+            else if (input.Equals("2") && !PlayerUpgradePaths.FastStrikeSpell)
             {
                 PlayerUpgradePaths.FastStrikeSpell = true;
                 Typewriter.Write("You can now cast [Fast Strike]");
             }
-            if (input.Equals("3"))
+            else if (input.Equals("3") && !PlayerUpgradePaths.PowerfulStrikeSpell)
             {
                 PlayerUpgradePaths.PowerfulStrikeSpell = true;
                 Typewriter.Write("You can now cast [Powerful Strike]");
             }
-            if (input.Equals("4"))
+            else if (input.Equals("4") && !PlayerUpgradePaths.LifestealSpell)
             {
                 PlayerUpgradePaths.LifestealSpell = true;
                 Typewriter.Write("You can now cast [Lifesteal]");
             }
+            else
+            {
+                response = false;
+            }
+            return response;
         }
+
+        public static Player CreatePlayer(string name)
+        {
+            Player player = new Player()
+            {
+                Name = name,
+                Level = 1,
+                MaxHP = 9,
+                CurrentHP = 9,
+                CurrentMana = 1,
+                MaxMana = 1,
+                Weapon = new Weapon(WeaponType.Unarmed),
+                ExperienceRequired = 1,
+                ExperienceGained = 0
+            };
+            if (name.Equals("skip"))
+            {
+                var starterWeapon = new Weapon()
+                {
+                    Name = "Rusty Sword",
+                    Type = WeaponType.Sword,
+                    MinDamage = 1,
+                    MaxDamage = 4,
+                };
+                player.Weapon = starterWeapon;
+                RoomEngine.GenerateNextArea(player);
+            }
+            if (name.Equals("cheater"))
+            {
+                var starterWeapon = new Weapon()
+                {
+                    Name = "Rusty Sword",
+                    Type = WeaponType.Sword,
+                    MinDamage = 1,
+                    MaxDamage = 4,
+                };
+                player.Weapon = starterWeapon;
+                player.PlayerUpgradePaths.RejuvinationSpell = true;
+                player.PlayerUpgradePaths.FastStrikeSpell = true;
+                player.PlayerUpgradePaths.PowerfulStrikeSpell = true;
+                player.PlayerUpgradePaths.LifestealSpell = true;
+                RoomEngine.GenerateNextArea(player);
+            }
+
+            return player;
+        }
+
     }
+
+    
+
 
     public class PlayerProgression
     {
@@ -130,8 +199,8 @@ namespace ConsoleApp1.Assets.Player
         public int ReceiveFirstHookAtLevel { get; set; } = 3;
         public int ReceiveSecondHookAtLevel { get; set; } = 5;
         public int ReceiveThirdHookAtLevel { get; set; } = 6;
-        public int ReceiveFourthHookAtLevel { get; set; } = 5;
-        public int ReceiveFifthHookAtLevel { get; set; } = 6;
+        public int ReceiveFourthHookAtLevel { get; set; } = 8;
+        public int ReceiveFifthHookAtLevel { get; set; } = 10;
 
         public bool HasCompletedFirstMilestone { get; set; } = false;
         public bool HasCompletedSecondMilestone { get; set; } = false;

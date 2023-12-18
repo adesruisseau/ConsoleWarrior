@@ -47,8 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Encounters\EncounterEngine.cs" />
-    <Compile Include="Assets\Enemies\EnemyBase.cs" />
-    <Compile Include="Assets\Enemies\EnemyEngine.cs" />
+    <Compile Include="Assets\Enemies\Enemy.cs" />
     <Compile Include="Assets\Models\AsciiArt.cs" />
     <Compile Include="Assets\Models\Typewriter.cs" />
     <Compile Include="Assets\Player\Player.cs" />
